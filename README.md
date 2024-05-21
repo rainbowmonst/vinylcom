@@ -1,2 +1,2 @@
 # vinylcom
- fakescamsite
+ DON'T ENTER YOUR DATA HERE
