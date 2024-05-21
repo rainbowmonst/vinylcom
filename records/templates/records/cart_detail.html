@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'records/style.css' %}">
+</head>
+<body>
+    <div class="cart-detail">
+        <h1>CART</h1>
+        <div class="cart-items">
+            {% for item in cart.cartitem_set.all %}
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        {% if item.record.image %}
+                            <img src="{{ item.record.image.url }}" alt="{{ item.record.album_name }}">
+                        {% else %}
+                            <img src="{% static 'records/default-album.jpg' %}" alt="Default Image">
+                        {% endif %}
+                    </div>
+                    <div class="cart-item-details">
+                        <h2>{{ item.record.artist }} ({{ item.record.release_year }})</h2>
+                        <p>Price: ${{ item.record.price }}</p>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <a class="remove-button" href="{% url 'remove_from_cart' item.id %}">Remove</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <form method="post" class="order-form">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="place-order-button">Place Order</button>
+        </form>
+    </div>
+</body>
+</html>

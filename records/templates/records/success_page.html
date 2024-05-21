@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Success</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'records/style.css' %}">
+</head>
+<div class="cart-detail">
+    <body>
+        <h1>Thank you for your order!</h1>
+        <p>Your order has been successfully placed in my wallet :)</p>
+        <a href="{% url 'record_list' %}">Return to Record List</a>
+    </body>
+</div>
+</html>

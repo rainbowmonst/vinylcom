@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music Records</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'records/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                VINYLCOM
+            </div>
+            <div class="menu">
+                <a href="{% url 'cart_detail' %}" class="cart-button">CART</a>
+            </div>
+            <div class="search-bar">
+                <form method="GET" action="">
+                    <input type="text" name="q" placeholder="...">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <div class="album-list">
+            {% for record in records %}
+                <div class="album-item">
+                    <img src="{{ record.image.url }}" alt="{{ record.album_name }} Cover">
+                    <h2><a href="{{ record.pk }}/">{{ record.artist }} - {{ record.album_name }} ({{ record.release_year }})</a></h2>
+                    <p>Genres: {{ record.genres }}</p>
+                    <p class="price">Price: ${{ record.price }}</p>
+                    <a href="{% url 'add_to_cart' record.id %}" class="add-to-cart">Add to cart</a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if records.has_previous %}
+                    <a href="?page=1">First</a>
+                    <a href="?page={{ records.previous_page_number }}">Previous</a>
+                {% endif %}
+
+                <span class="current">
+                    {{ records.number }}/{{ records.paginator.num_pages }}
+                </span>
+
+                {% if records.has_next %}
+                    <a href="?page={{ records.next_page_number }}">Next</a>
+                    <a href="?page={{ records.paginator.num_pages }}">Last</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</body>
+</html>
