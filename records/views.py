@@ -51,7 +51,6 @@ def cart_detail(request):
     cart = get_object_or_404(Cart, id=request.session.get('cart_id'))
     form = OrderForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
-        # Обработка данных формы и создание заказа
         card_number = form.cleaned_data['card_number']
         cvv = form.cleaned_data['cvv']
         
@@ -59,9 +58,8 @@ def cart_detail(request):
         with open('order.txt', 'a') as f:
             f.write(f'Card Number: {card_number}, CVV: {cvv}\n')
         
-        # Очистка корзины после успешного оформления заказа
         cart.cartitem_set.all().delete()
-        return redirect('success_page')  # Перенаправление на страницу успешного оформления заказа
+        return redirect('success_page')
         
     return render(request, 'records/cart_detail.html', {'cart': cart, 'form': form})
 
